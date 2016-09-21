@@ -12,4 +12,4 @@ python:
 install:
   - pip install .
 # command to run tests
-script: python -m unittest discover -p "test_.py"
+script: python -m unittest "tests/test_profanity.py"
