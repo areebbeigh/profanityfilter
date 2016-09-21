@@ -44,3 +44,7 @@ class TestProfanity(unittest.TestCase):
         bad_words = profanityfilter.get_bad_words()
         self.assertFalse("dibs" in bad_words)
         self.assertFalse("cupcakes" in bad_words)
+
+if __name__ == "__main__":
+    unittest.main()
+
