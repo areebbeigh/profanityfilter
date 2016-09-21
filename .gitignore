@@ -10,10 +10,6 @@ profanityfilter.egg-info
 # IDE
 .idea/
 
-# Personal
-settings_production.py
-mysql_conf.cnf
-
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
