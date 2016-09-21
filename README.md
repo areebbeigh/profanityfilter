@@ -1,5 +1,10 @@
 # profanityfilter
-A Python library for detecting and/or filtering profane words.
+A universal Python library for detecting and/or filtering profane words.
+
+<img src="https://pixabay.com/static/uploads/photo/2014/03/24/13/47/swearing-294391_960_720.png" height="300px" width="250px">
+
+<b>PyPI:</b> https://pypi.python.org/pypi/profanityfilter
+<b>Doc:</b> http://pythonhosted.org/profanityfilter
 
 # Installation
 
