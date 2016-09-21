@@ -4,6 +4,9 @@ dist
 profanityfilter.egg-info
 .pyirc
 
+# http://pythonhosted.org/profanityfilter
+index.html
+
 # Python compiled files
 *.pyc
 
