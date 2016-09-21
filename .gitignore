@@ -2,6 +2,7 @@
 build
 dist
 profanityfilter.egg-info
+.pyirc
 
 # Python compiled files
 *.pyc
