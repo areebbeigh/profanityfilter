@@ -1,4 +1,6 @@
 # profanityfilter
+[![Build Status](https://travis-ci.org/areebbeigh/profanityfilter.svg?branch=master)](https://travis-ci.org/areebbeigh/profanityfilter)
+
 A universal Python library for detecting and/or filtering profane words.
 
 <img src="https://pixabay.com/static/uploads/photo/2014/03/24/13/47/swearing-294391_960_720.png" height="300px" width="250px">
