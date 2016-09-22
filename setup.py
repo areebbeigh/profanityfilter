@@ -10,7 +10,7 @@ with open('README.md', 'r') as f:
 
 setup(
     name='profanityfilter',
-    version='1.0',
+    version='1.1',
     description='A Python library for detecting and/or filtering profane words.',
     long_description=long_description,
     url='https://github.com/areebbeigh/profanityfilter',
