@@ -23,9 +23,9 @@ class TestProfanity(unittest.TestCase):
         self.assertEqual(censored, "Hey, I like unicorns, chocolate and oranges, ####!")
 
     def test_define_words(self):
-        profanityfilter.define_words(["unicorn", "chocolate"])
+        profanityfilter.define_words(["unicorns", "chocolate"])
         update_censored()
-        self.assertFalse("unicorn" in censored)
+        self.assertFalse("unicorns" in censored)
         self.assertFalse("chocolate" in censored)
         self.assertTrue("Turd" in censored)
 
