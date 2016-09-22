@@ -56,8 +56,9 @@ def censor(input_text):
     bad_words = get_bad_words()
     res = input_text
     for word in bad_words:
-        regex = re.compile(re.escape(word), re.IGNORECASE)
-        res = regex.sub(_censor_char * len(word), res)
+        word = r'\b%s\b' % word  # Apply word boundaries to the bad word
+        regex = re.compile(word, re.IGNORECASE)
+        res = regex.sub(_censor_char * (len(word) - 4), res)
     return res
 
 
