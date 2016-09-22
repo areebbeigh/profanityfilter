@@ -14,7 +14,7 @@ def main():
 
     args = parser.parse_args()
 
-    if not(args.text and args.path):
+    if args.text and args.path:
         parser.print_help()
         exit()
 
