@@ -4,6 +4,8 @@ dist
 profanityfilter.egg-info
 .pyirc
 
+tox.ini
+
 # http://pythonhosted.org/profanityfilter
 index.html
 index.zip
@@ -61,3 +63,4 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.ini

@@ -1,7 +1,7 @@
 import os
 import re
 
-_words = None
+_words = []
 _censor_char = "*"
 _BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 _words_file = os.path.join(_BASE_DIR, 'data', 'badwords.txt')
@@ -16,7 +16,9 @@ def _load_words(word_list=None, include_original=True):
             return
     with open(_words_file, 'r') as f:
         lines = f.readlines()
-        _words = [line.strip() for line in lines]
+        if not _words or not word_list:
+            _words = []
+        _words.extend([line.strip() for line in lines])
 
 
 def define_words(word_list):
@@ -26,8 +28,7 @@ def define_words(word_list):
 
 def append_words(word_list):
     """ Extends the profane word list with word_list """
-    get_bad_words()
-    _words.extend(word_list)
+    _load_words(word_list)
 
 
 def restore_words():
@@ -46,8 +47,7 @@ def set_censor(character):
 def get_bad_words():
     """ Returns the list of profane words """
     if not _words:
-        _load_words(None)
-        return _words
+        _load_words()
     return _words
 
 
@@ -70,3 +70,5 @@ def is_clean(input_text):
 def is_profane(input_text):
     """ Returns True if input_text contains any profane words, False otherwise. """
     return input_text != censor(input_text)
+
+_load_words()
