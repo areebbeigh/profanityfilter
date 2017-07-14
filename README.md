@@ -15,20 +15,23 @@ A universal Python library for detecting and/or filtering profane words.
 # Usage
 
 ```
-import profanityfilter
-profanityfilter.censor("That's bullshit!")
+from profanityfilter import ProfanityFilter
+
+pf = Profanityfilter()
+
+pf.censor("That's bullshit!")
 > "That's ********!"
-profanityfilter.set_censor("@")
-profanityfilter.censor("That's bullshit!")
+pf.set_censor("@")
+pf.censor("That's bullshit!")
 > "That's @@@@@@@@!"
-profanityfilter.define_words(["icecream", "choco"])
-profanityfilter.censor("I love icecream and choco!")
+pf.define_words(["icecream", "choco"])
+pf.censor("I love icecream and choco!")
 > "I love ******** and *****"
-profanityfilter.is_clean("That's awesome!")
+pf.is_clean("That's awesome!")
 > True
-profanityfilter.is_clean("That's bullshit!")
+pf.is_clean("That's bullshit!")
 > False
-profanityfilter.is_profane("Profane shit is not good")
+pf.is_profane("Profane shit is not good")
 > True
 ```
 
