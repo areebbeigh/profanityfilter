@@ -1,7 +1,9 @@
 import argparse
 from sys import exit
 
-import profanityfilter
+from profanityfilter import ProfanityFilter
+
+pf = ProfanityFilter()
 
 
 def main():
@@ -24,7 +26,7 @@ def main():
         with open(args.path, 'r') as f:
             text = "".join(f.readlines())
 
-    censored_text = profanityfilter.censor(text)
+    censored_text = pf.censor(text)
 
     if args.output_file:
         with open(args.output_file, 'w') as f:
@@ -38,7 +40,7 @@ def main():
     if args.show or args.output_file:
         return
 
-    if profanityfilter.is_clean(text):
+    if pf.is_clean(text):
         print("This text is clean.")
     else:
         print("This text is not clean!")
