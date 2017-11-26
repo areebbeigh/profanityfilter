@@ -6,7 +6,7 @@ A universal Python library for detecting and/or filtering profane words.
 <img src="https://pixabay.com/static/uploads/photo/2014/03/24/13/47/swearing-294391_960_720.png" height="300px" width="250px">
 
 <b>PyPI:</b> https://pypi.python.org/pypi/profanityfilter<br>
-<b>Doc:</b> https://github.com/areebbeigh/profanityfilter/wiki
+<b>Doc:</b> https://areebbeigh.github.io/profanityfilter/
 
 # Installation
 
