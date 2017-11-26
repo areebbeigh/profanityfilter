@@ -10,6 +10,6 @@ python:
   - "nightly" # currently points to 3.6-dev
 # command to install dependencies
 install:
-  - pip install .
+  - pip install -r requirements.py
 # command to run tests
-script: python -m unittest tests.test_profanity
+script: pytest
