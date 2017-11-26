@@ -12,4 +12,4 @@ python:
 install:
   - pip install -r requirements.py
 # command to run tests
-script: pytest
+script: py.test
