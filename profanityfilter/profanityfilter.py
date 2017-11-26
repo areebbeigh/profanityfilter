@@ -62,9 +62,9 @@ class ProfanityFilter:
         profane_words = []
 
         if self._custom_censor_list:
-            profane_words = self._custom_censor_list.copy()
+            profane_words = [w for w in self._custom_censor_list]  # Previous versions of Python don't have list.copy()
         else:
-            profane_words = self._censor_list.copy()
+            profane_words = [w for w in self._censor_list]
 
         profane_words.extend(self._extra_censor_list)
         profane_words.extend([inflection.pluralize(word) for word in profane_words])
