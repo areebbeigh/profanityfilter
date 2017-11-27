@@ -17,7 +17,7 @@ A universal Python library for detecting and/or filtering profane words.
 ```
 from profanityfilter import ProfanityFilter
 
-pf = Profanityfilter()
+pf = ProfanityFilter()
 
 pf.censor("That's bullshit!")
 > "That's ********!"
@@ -33,6 +33,14 @@ pf.is_clean("That's bullshit!")
 > False
 pf.is_profane("Profane shit is not good")
 > True
+
+pf_custom = ProfanityFilter(custom_censor_list=["chocolate", "orange"])
+pf_custom.censor("Fuck orange chocolates")
+> "Fuck ****** **********"
+
+pf_extended = ProfanityFilter(extra_censor_list=["chocolate", "orange"])
+pf_extended.censor("Fuck orange chocolates")
+> "**** ****** **********"
 ```
 
 # Console Executable
