@@ -62,6 +62,12 @@ profanityfilter -h
 ```
 
 # Contributing
+
+- Fork
+- Add changes
+- Add unit tests
+- Make a pull request :)
+
 I encourage you to fork this repo and expand it in anyway you like. Pull requests are welcomed!
 
 # Additional Info
