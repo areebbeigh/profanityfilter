@@ -1,7 +1,6 @@
 import os
-import re
 
-import inflection
+import spacy
 
 
 class ProfanityFilter:
@@ -12,6 +11,9 @@ class ProfanityFilter:
 
         # Words to be used in conjunction with _censor_list
         self._extra_censor_list = kwargs.get('extra_censor_list', [])
+
+        # Language for tokenization and lemmatization
+        self._language = kwargs.get('language', 'en')
 
         # What to be censored -- should not be modified by user
         self._censor_list = []
@@ -24,6 +26,8 @@ class ProfanityFilter:
         self._words_file = os.path.join(self._BASE_DIR, 'data', 'badwords.txt')
 
         self._load_words()
+
+        self._nlp = spacy.load(self._language)
 
     def _load_words(self):
         """ Loads the list of profane words from file. """
@@ -67,7 +71,6 @@ class ProfanityFilter:
             profane_words = [w for w in self._censor_list]
 
         profane_words.extend(self._extra_censor_list)
-        profane_words.extend([inflection.pluralize(word) for word in profane_words])
         profane_words = list(set(profane_words))
 
         return profane_words
@@ -79,24 +82,19 @@ class ProfanityFilter:
         #self._load_words()
         #print("Hey" in self.get_profane_words())
 
-
     def censor(self, input_text):
         """ Returns input_text with any profane words censored """
         bad_words = self.get_profane_words()
         res = input_text
-
-        for word in bad_words:
-            word = r'\b%s\b' % word  # Apply word boundaries to the bad word
-            regex = re.compile(word, re.IGNORECASE)
-            res = regex.sub(self._censor_char * (len(word) - 4), res)
-
+        doc = self._nlp(input_text)
+        for token in doc:
+            if token.lemma_ in bad_words:
+                res = res[:token.idx] + len(token.text) * self._censor_char + res[token.idx + len(token.text):]
         return res
-
 
     def is_clean(self, input_text):
         """ Returns True if input_text doesn't contain any profane words, False otherwise. """
         return not self.has_bad_word(input_text)
-
 
     def is_profane(self, input_text):
         """ Returns True if input_text contains any profane words, False otherwise. """
