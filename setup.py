@@ -37,7 +37,7 @@ setup(
     ],
     keywords='profanity filter clean content',
     packages=find_packages(exclude=['tests']),
-    install_requires=['inflection'],
+    install_requires=['spacy', 'inflection'],
     package_data={
         'profanityfilter': ['data/badwords.txt'],
     },
