@@ -76,6 +76,12 @@ pf.censor("oofucksoo")
 > "oo*****oo"
 ```
 
+## Pymorphy2
+For Russian and Ukranian languages to achieve better results we suggest you to install `pymorphy2`. For Russian language do:
+```
+> pip install pymorphy2 pymorphy2-dicts-ru
+```
+
 # Console Executable
 
 ```

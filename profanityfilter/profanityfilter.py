@@ -16,10 +16,20 @@ try:
 except ImportError:
     DEEP_ANALYSIS_AVAILABLE = False
 
+try:
+    import pymorphy2
+    PYMORPHY2_AVAILABLE = True
+except ImportError:
+    PYMORPHY2_AVAILABLE = False
+
+
+class ProfanityFilterError(Exception):
+    pass
+
 
 class ProfanityFilter:
     def __init__(self, **kwargs):
-        global DEEP_ANALYSIS_AVAILABLE
+        global DEEP_ANALYSIS_AVAILABLE, PYMORPHY2_AVAILABLE
 
         # If defined, use this instead of _censor_list
         self._custom_censor_list = kwargs.get('custom_censor_list', [])
@@ -28,7 +38,7 @@ class ProfanityFilter:
         self._extra_censor_list = kwargs.get('extra_censor_list', [])
 
         # Language for tokenization and lemmatization
-        self._language = kwargs.get('language', 'en')
+        self._languages = kwargs.get('languages', ['en'])
 
         # What to be censored -- should not be modified by user
         self._censor_list = []
@@ -50,23 +60,52 @@ class ProfanityFilter:
         # Where to find the censored words
         self._BASE_DIR = os.path.abspath(os.path.dirname(__file__))
         self._DATA_DIR = os.path.join(self._BASE_DIR, 'data')
-        self._words_file = os.path.join(self._DATA_DIR, 'badwords.txt')
+        for language in self._languages:
+            self._words_file = os.path.join(self._DATA_DIR, language + '_badwords.txt')
+            if os.path.exists(self._words_file):
+                break
+        languages_comma_separated = ', '.join(self._languages)
+        if not os.path.exists(self._words_file):
+            raise ProfanityFilterError("Couldn't load profane words for any of languages: " + languages_comma_separated)
 
         self._load_words()
 
-        self._nlp = spacy.load(self._language, disable=['parser', 'ner'])
+        spacy_available = False
+        for language in self._languages:
+            try:
+                self._nlp = spacy.load(language, disable=['parser', 'ner'])
+                spacy_available = True
+                break
+            except OSError:
+                pass
+        if not spacy_available:
+            raise ProfanityFilterError("Couldn't load Spacy model for any of languages: " + languages_comma_separated)
 
         if DEEP_ANALYSIS_AVAILABLE:
-            try:
-                self._hunspell = HunSpell(
-                    os.path.join(self._DATA_DIR, self._language + '.dic'),
-                    os.path.join(self._DATA_DIR, self._language + '.aff'))
-            except HunSpellError:
-                DEEP_ANALYSIS_AVAILABLE = False
+            DEEP_ANALYSIS_AVAILABLE = False
+            for language in self._languages:
+                try:
+                    self._hunspell = HunSpell(
+                        os.path.join(self._DATA_DIR, language + '.dic'),
+                        os.path.join(self._DATA_DIR, language + '.aff'))
+                    DEEP_ANALYSIS_AVAILABLE = True
+                    break
+                except HunSpellError:
+                    pass
 
         if DEEP_ANALYSIS_AVAILABLE:
             self._alphabet = set()
             self._trie = None
+
+        if PYMORPHY2_AVAILABLE:
+            PYMORPHY2_AVAILABLE = False
+            for language in self._languages:
+                try:
+                    self._morph = pymorphy2.MorphAnalyzer(lang=language)
+                    PYMORPHY2_AVAILABLE = True
+                    break
+                except ValueError:
+                    pass
 
     def _load_words(self):
         """ Loads the list of profane words from file. """
@@ -195,6 +234,9 @@ class ProfanityFilter:
         if deep_analysis and DEEP_ANALYSIS_AVAILABLE:
             hunspell_stems = self._hunspell.stem(word.text)
             result |= {hunspell_stem.decode('utf-8') for hunspell_stem in hunspell_stems}
+        if PYMORPHY2_AVAILABLE:
+            pymorphy_normal_form = self._morph.parse(word.text)[0].normal_form
+            result.add(pymorphy_normal_form)
         return result
 
     def _keep_only_letters_or_dictionary_word(self, word):

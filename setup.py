@@ -36,7 +36,7 @@ setup(
     packages=find_packages(exclude=['tests']),
     install_requires=['spacy'],
     package_data={
-        'profanityfilter': ['data/badwords.txt'],
+        'profanityfilter': ['data/en_badwords.txt', 'data/ru_badwords.txt'],
     },
     entry_points={
         'console_scripts': [
