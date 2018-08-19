@@ -48,6 +48,34 @@ pf_extended.censor("Fuck orange chocolates")
 > "**** ****** **********"
 ```
 
+## Deep analysis
+Deep analysis detects profane words that are inflected from profane words in profane word dictionary.
+
+To get deep analysis functionality install additional packages and dictionary for your language (English by default).
+
+Firstly, install `hunspell` and `hunspell-devel` packages with your system package manager. Then run:
+```
+> pip install hunspell python-Levenshtein https://github.com/rominf/pyffs/archive/master.zip
+> cd profanityfilter/data
+> wget https://cgit.freedesktop.org/libreoffice/dictionaries/plain/en/en_US.dic
+> wget https://cgit.freedesktop.org/libreoffice/dictionaries/plain/en/en_US.aff
+> mv en_US.aff en.aff
+> mv en_US.dic en.dic
+```
+
+Then use profanity filter as usual:
+```
+from profanityfilter import ProfanityFilter
+
+pf = ProfanityFilter()
+
+pf.censor("fuckfuck")
+> "********"
+
+pf.censor("oofucksoo")
+> "oo*****oo"
+```
+
 # Console Executable
 
 ```

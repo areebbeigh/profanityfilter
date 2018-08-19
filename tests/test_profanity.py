@@ -1,5 +1,9 @@
-from profanityfilter import ProfanityFilter
 import unittest
+
+import pytest
+
+import profanityfilter
+from profanityfilter import ProfanityFilter
 
 pf = ProfanityFilter()
 TEST_STATEMENT = "Hey, I like unicorns, chocolate, oranges and man's blood, Turd!"
@@ -44,6 +48,7 @@ class TestProfanity(unittest.TestCase):
         self.assertFalse("Hey" in censored)
         self.assertFalse("like" in censored)
         self.assertFalse("Turd" in censored)
+        pf.restore_words()
 
     def test_restore_words(self):
         pf.define_words(["cupcakes"])
@@ -64,6 +69,25 @@ class TestProfanity(unittest.TestCase):
         self.assertTrue(pf.is_profane("dIcK"))
         self.assertTrue(pf.is_profane("dicks"))
         self.assertTrue(pf.is_profane("fucks"))
+
+    @pytest.mark.skipif(not profanityfilter.DEEP_ANALYSIS_AVAILABLE,
+                        reason="Couldn't initialize HunSpell or import distance libs for deep analysis")
+    def test_deep_analysis(self):
+        self.assertEqual("duck", pf.censor("duck"))
+        self.assertEqual("*******", pf.censor("mulkku0"))
+        self.assertEqual("******0", pf.censor("mulkku0", censor_whole_words=False))
+        self.assertEqual("*******", pf.censor("oofucko"))
+        self.assertEqual("oo****o", pf.censor("oofucko", censor_whole_words=False))
+        self.assertEqual("********", pf.censor("fuckfuck"))
+        self.assertEqual("addflxppxpfs", pf.censor("addflxppxpfs"))
+        self.assertEqual("********.", pf.censor(".s.h.i.t."))
+        self.assertEqual("*********", pf.censor("*s*h*i*t*"))
+        self.assertEqual("****", pf.censor("sh!t"))
+
+    def test_without_deep_analysis(self):
+        self.assertEqual("mulkku0", pf.censor("mulkku0", deep_analysis=False))
+        self.assertEqual("oofuckoo", pf.censor("oofuckoo", deep_analysis=False))
+        self.assertEqual("fuckfuck", pf.censor("fuckfuck", deep_analysis=False))
 
 
 class TestInstanciation(unittest.TestCase):
