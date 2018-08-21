@@ -4,6 +4,11 @@ dist
 profanityfilter.egg-info
 .pyirc
 
+include 
+bin
+lib
+man
+
 tox.ini
 
 # http://pythonhosted.org/profanityfilter

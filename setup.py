@@ -7,7 +7,7 @@ here = path.abspath(path.dirname(__file__))
 
 setup(
     name='profanityfilter',
-    version='2.0.3',
+    version='2.0.4',
     description='A universal Python library for detecting and/or filtering profane words.',
     long_description="",
     url='https://github.com/areebbeigh/profanityfilter',
