@@ -9,8 +9,13 @@ A universal Python library for detecting and/or filtering profane words.
 <b>Doc:</b> https://areebbeigh.github.io/profanityfilter/
 
 # Installation
+For English:
+```
+> pip install profanityfilter
+> python -m spacy download en  # Download Spacy model for tokenization and lemmatization
+```
 
-`> pip install profanityfilter`
+For more info about Spacy models read: https://spacy.io/usage/models/.
 
 # Usage
 
