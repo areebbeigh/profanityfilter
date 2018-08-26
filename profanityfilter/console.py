@@ -3,14 +3,14 @@ from sys import exit
 
 from profanityfilter import ProfanityFilter
 
-pf = ProfanityFilter()
-
 
 def main():
     parser = argparse.ArgumentParser(description='Profanity filter console utility')
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-t', '--text', dest='text', help='Test the given text for profanity')
     group.add_argument('-f', '--file', dest='path', help='Test the given file for profanity')
+    parser.add_argument('-l', '--languages', dest='languages',
+                        help='Test for profanity using specified languages (comma separated)')
     parser.add_argument('-o', '--output', dest='output_file', help='Write the censored output to a file')
     parser.add_argument('--show', action='store_true', help='Print the censored text')
 
@@ -25,7 +25,10 @@ def main():
     elif args.path:
         with open(args.path, 'r') as f:
             text = "".join(f.readlines())
+    else:
+        text = ""
 
+    pf = ProfanityFilter(languages=args.languages.split(','))
     censored_text = pf.censor(text)
 
     if args.output_file:

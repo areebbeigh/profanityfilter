@@ -6,8 +6,10 @@ import profanityfilter
 from profanityfilter import ProfanityFilter
 
 pf = ProfanityFilter()
+pf_ru_en = ProfanityFilter(languages=['ru', 'en'])
 TEST_STATEMENT = "Hey, I like unicorns, chocolate, oranges and man's blood, Turd!"
 CLEAN_STATEMENT = "Hey there, I like chocolate too mate."
+
 
 def update_censored(pf_instance=pf):
     global censored
@@ -35,14 +37,14 @@ class TestProfanity(unittest.TestCase):
         self.assertEqual(censored, "Hey, I like unicorns, chocolate, oranges and man's blood, ####!")
 
     def test_define_words(self):
-        pf.define_words(["unicorn", "chocolate"])  # Testing pluralization here as well
+        pf.define_words('en', ["unicorn", "chocolate"])  # Testing pluralization here as well
         update_censored()
         self.assertFalse("unicorns" in censored)
         self.assertFalse("chocolate" in censored)
         self.assertTrue("Turd" in censored)
 
     def test_append_words(self):
-        pf.append_words(["hey", "like"])
+        pf.append_words('en', ["hey", "like"])
         update_censored()
         self.assertTrue("oranges" in censored)
         self.assertFalse("Hey" in censored)
@@ -51,15 +53,15 @@ class TestProfanity(unittest.TestCase):
         pf.restore_words()
 
     def test_restore_words(self):
-        pf.define_words(["cupcakes"])
-        pf.append_words(["dibs"])
+        pf.define_words('en', ["cupcakes"])
+        pf.append_words('en', ["dibs"])
         pf.restore_words()
         bad_words = pf.get_profane_words()
         self.assertFalse("dibs" in bad_words)
         self.assertFalse("cupcakes" in bad_words)
 
     def test_tokenization(self):
-        pf.define_words(["man"])
+        pf.define_words('en', ["man"])
         update_censored()
         self.assertEqual(censored, "Hey, I like unicorns, chocolate, oranges and ***'s blood, Turd!")
 
@@ -89,11 +91,20 @@ class TestProfanity(unittest.TestCase):
         self.assertEqual("oofuckoo", pf.censor("oofuckoo", deep_analysis=False))
         self.assertEqual("fuckfuck", pf.censor("fuckfuck", deep_analysis=False))
 
+    def test_russian(self):
+        self.assertEqual("***", pf_ru_en.censor("бля"))
+        self.assertEqual("***********", pf_ru_en.censor("забляканный"))
+
+    @pytest.mark.skipif(not profanityfilter.POLYGLOT_AVAILABLE,
+                        reason="Couldn't initialize polyglot for language detection")
+    def test_multilingual(self):
+        self.assertEqual("Да ***, это просто **** какой-то!", pf_ru_en.censor("Да бля, это просто shit какой-то!"))
+
 
 class TestInstanciation(unittest.TestCase):
     def setUp(self):
-        self.custom_pf = ProfanityFilter(custom_censor_list=["chocolate", "orange"])
-        self.extended_pf = ProfanityFilter(extra_censor_list=["chocolate", "orange"])
+        self.custom_pf = ProfanityFilter(custom_censor_list={'en': ["chocolate", "orange"]})
+        self.extended_pf = ProfanityFilter(extra_censor_list={'en': ["chocolate", "orange"]})
 
     def test_custom_list(self):
         update_censored(self.custom_pf)
