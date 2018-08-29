@@ -1,1 +1,2 @@
-include profanityfilter/data/badwords.txt
+include profanityfilter/data/en_badwords.txt
+include profanityfilter/data/ru_badwords.txt
