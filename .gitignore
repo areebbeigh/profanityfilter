@@ -1,3 +1,13 @@
+# Tests
+.pytest_cache/
+
+# Pyenv
+.python-version
+
+# Data
+profanityfilter/data/*.aff
+profanityfilter/data/*.dic
+
 # Installation stuff
 build
 dist
