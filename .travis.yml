@@ -13,4 +13,7 @@ python:
 install:
   - pip install -r requirements.py
 # command to run tests
-script: py.test
+script: 
+  - py.test
+after_script:
+  - bash .travis/push-docs.sh
