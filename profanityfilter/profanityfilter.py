@@ -38,6 +38,10 @@ class ProfanityFilter:
         """ Extends the profane word list with word_list """
         self._extra_censor_list.extend(word_list)
 
+    def remove_word(self, word):
+        """ Remove given word from censor list """
+        self._censor_list.remove(word)
+
     def set_censor(self, character):
         """ Replaces the original censor character '*' with character """
         # TODO: what if character isn't str()-able?
@@ -73,10 +77,10 @@ class ProfanityFilter:
         return profane_words
 
     def restore_words(self):
-        """ Clears all custom censor lists """
+        """ Clears all custom censor lists and reloads the default censor list """
         self._custom_censor_list = []
         self._extra_censor_list = []
-        #self._load_words()
+        self._load_words()
         #print("Hey" in self.get_profane_words())
 
 
