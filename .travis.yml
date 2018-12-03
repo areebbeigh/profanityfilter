@@ -7,9 +7,22 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
-  - "nightly" # currently points to 3.6-dev
+  # - "3.7"
+  - "nightly" 
 # command to install dependencies
 install:
   - pip install -r requirements.py
 # command to run tests
-script: py.test
+script: 
+  - py.test
+  - if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then bash .travis/generate-docs.sh && touch docs/build/html/.nojekyll; fi
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  local-dir: docs/build/html
+  keep-history: true
+  target-branch: gh-pages
+  on:
+    branch: master
+    condition: $TRAVIS_PYTHON_VERSION = '3.6'

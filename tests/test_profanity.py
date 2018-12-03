@@ -45,9 +45,16 @@ class TestProfanity(unittest.TestCase):
         self.assertFalse("like" in censored)
         self.assertFalse("Turd" in censored)
 
+    def test_remove_word(self):
+        self.assertTrue("Turd" in censored)
+        pf.remove_word("turd")
+        update_censored()
+        self.assertTrue("Turd" in censored)
+
     def test_restore_words(self):
         pf.define_words(["cupcakes"])
         pf.append_words(["dibs"])
+        pf.remove_word("turd")
         pf.restore_words()
         bad_words = pf.get_profane_words()
         self.assertFalse("dibs" in bad_words)
