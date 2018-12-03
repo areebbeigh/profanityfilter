@@ -15,5 +15,12 @@ install:
 # command to run tests
 script: 
   - py.test
-after_script:
-  - bash .travis/push-docs.sh
+# after_script:
+#   - bash .travis/push-docs.sh
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  local-dir: docs/build/html
+  keep-history: true
+  target-branch: gh-pages

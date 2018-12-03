@@ -20,8 +20,10 @@ push_github_pages() {
     git remote remove origin
     git remote add origin https://${GH_TOKEN}@github.com/areebbeigh/profanityfilter.git
 
-    git push origin github-pages
+    git push origin gh-pages
 }
+
+pip install sphinx
 
 make_doc_files
 move_doc_files
