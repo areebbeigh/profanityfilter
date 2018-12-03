@@ -7,7 +7,6 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
-  # - "3.7"
   - "nightly" 
 # command to install dependencies
 install:
@@ -15,7 +14,15 @@ install:
 # command to run tests
 script: 
   - py.test
+
+
+python:
+  - "3.6"
+install:
+  - pip install sphinx
+script:
   - bash .travis/generate-docs.sh
+
 # deploy:
 #   provider: pages
 #   skip-cleanup: true
