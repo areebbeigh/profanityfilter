@@ -7,6 +7,7 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
+  # - "3.7"
   - "nightly" 
 # command to install dependencies
 install:
@@ -14,21 +15,14 @@ install:
 # command to run tests
 script: 
   - py.test
-
-
-python:
-  - "3.6"
-install:
-  - pip install sphinx
-script:
-  - bash .travis/generate-docs.sh
-
-# deploy:
-#   provider: pages
-#   skip-cleanup: true
-#   github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-#   local-dir: docs/build/html
-#   keep-history: true
-#   target-branch: gh-pages
-#   on:
-#     branch: dev
+  - if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then bash .travis/generate-docs.sh; fi
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
+  local-dir: docs/build/html
+  keep-history: true
+  target-branch: gh-pages
+  on:
+    branch: dev
+    condition: $TRAVIS_PYTHON_VERSION = '3.6'
