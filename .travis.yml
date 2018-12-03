@@ -15,8 +15,8 @@ install:
 # command to run tests
 script: 
   - py.test
-# after_script:
-#   - bash .travis/push-docs.sh
+after_script:
+  - bash .travis/generate-docs.sh
 deploy:
   provider: pages
   skip-cleanup: true
