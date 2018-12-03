@@ -15,7 +15,7 @@ install:
 # command to run tests
 script: 
   - py.test
-  - if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then bash .travis/generate-docs.sh; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == '3.6' ]]; then bash .travis/generate-docs.sh && touch .nojekyll; fi
 deploy:
   provider: pages
   skip-cleanup: true
