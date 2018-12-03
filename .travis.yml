@@ -24,5 +24,5 @@ deploy:
   keep-history: true
   target-branch: gh-pages
   on:
-    branch: dev
+    branch: master
     condition: $TRAVIS_PYTHON_VERSION = '3.6'
