@@ -24,3 +24,5 @@ deploy:
   local-dir: docs/build/html
   keep-history: true
   target-branch: gh-pages
+  on:
+    branch: dev
