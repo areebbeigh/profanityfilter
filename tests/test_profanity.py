@@ -8,7 +8,6 @@ CLEAN_STATEMENT = "Hey there, I like chocolate too mate."
 def update_censored(pf_instance=pf):
     global censored
     censored = pf_instance.censor(TEST_STATEMENT)
-    #print(censored)
 
 
 class TestProfanity(unittest.TestCase):
@@ -24,6 +23,10 @@ class TestProfanity(unittest.TestCase):
         self.assertFalse(pf.is_profane(CLEAN_STATEMENT))
 
     def test_censor(self):
+        self.assertEqual(
+            pf.censor("My email is fuckyoubitch@fuck.com"),
+            "My email is fuckyoubitch@****.com"
+        )
         update_censored()
         self.assertEqual(censored, "Hey, I like unicorns, chocolate and oranges, ****!")
         pf.set_censor("#")
@@ -31,7 +34,8 @@ class TestProfanity(unittest.TestCase):
         self.assertEqual(censored, "Hey, I like unicorns, chocolate and oranges, ####!")
 
     def test_define_words(self):
-        pf.define_words(["unicorn", "chocolate"])  # Testing pluralization here as well
+        # Testing pluralization here as well
+        pf.define_words(["unicorn", "chocolate"])
         update_censored()
         self.assertFalse("unicorns" in censored)
         self.assertFalse("chocolate" in censored)
@@ -59,25 +63,6 @@ class TestProfanity(unittest.TestCase):
         bad_words = pf.get_profane_words()
         self.assertFalse("dibs" in bad_words)
         self.assertFalse("cupcakes" in bad_words)
-
-
-class TestInstanciation(unittest.TestCase):
-    def setUp(self):
-        self.custom_pf = ProfanityFilter(custom_censor_list=["chocolate", "orange"])
-        self.extended_pf = ProfanityFilter(extra_censor_list=["chocolate", "orange"])
-
-    def test_custom_list(self):
-        update_censored(self.custom_pf)
-        self.assertFalse("chocolate" in censored)
-        self.assertFalse("oranges" in censored)
-        self.assertTrue("Turd" in censored)
-
-    def test_extended_list(self):
-        update_censored(self.extended_pf)
-        self.assertFalse("chocolate" in censored)
-        self.assertFalse("oranges" in censored)
-        self.assertFalse("Turd" in censored)
-        self.assertTrue("Hey" in censored)
 
 if __name__ == "__main__":
     unittest.main()
