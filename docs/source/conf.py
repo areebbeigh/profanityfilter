@@ -26,7 +26,7 @@ author = 'Areeb Beigh'
 # The short X.Y version
 version = ''
 # The full version, including alpha/beta/rc tags
-release = '2.0.5'
+release = '2.0.6'
 
 
 # -- General configuration ---------------------------------------------------
@@ -40,6 +40,7 @@ release = '2.0.5'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.autosectionlabel'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -175,3 +176,11 @@ epub_exclude_files = ['search.html']
 
 
 # -- Extension configuration -------------------------------------------------
+
+def skip(app, what, name, obj, skip, options):
+    if name == "__init__":
+        return False
+    return skip
+
+def setup(app):
+    app.connect("autodoc-skip-member", skip)
