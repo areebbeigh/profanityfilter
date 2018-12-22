@@ -147,9 +147,9 @@ to detect bad words inside words.
 
 .. note::
 
-    Without word boundaries there's a risk of censoring non-harmful words like `fun` to `**n` when `fu`
-    is in the censor list. To avoid this behavior, you can either come up with custom censor lists or use
-    different instances of profanityfilter accordingly.
+    Without word boundaries there's a risk of censoring non-harmful words. 
+    For example `fun` is censored to `**n` when `fu` is in the censor list. 
+    To avoid this behavior, you can either come up with custom censor lists or use different instances of profanityfilter accordingly.
 
 
 API Reference
