@@ -8,10 +8,13 @@ class ProfanityFilter:
     def __init__(self, **kwargs):
 
         # If defined, use this instead of _censor_list
-        self._custom_censor_list = kwargs.get('custom_censor_list', [])
+        self._custom_censor_list = kwargs.get("custom_censor_list", [])
 
         # Words to be used in conjunction with _censor_list
-        self._extra_censor_list = kwargs.get('extra_censor_list', [])
+        self._extra_censor_list = kwargs.get("extra_censor_list", [])
+
+        # Toggle use of word boundaries in regex
+        self._no_word_boundaries = kwargs.get("no_word_boundaries", False)
 
         # What to be censored -- should not be modified by user
         self._censor_list = []
@@ -73,7 +76,12 @@ class ProfanityFilter:
         profane_words.extend(self._extra_censor_list)
         profane_words.extend([inflection.pluralize(word) for word in profane_words])
         profane_words = list(set(profane_words))
-
+        
+        # We sort the list based on decreasing word length so that words like
+        # 'fu' aren't substituted before 'fuck' if no_word_boundaries = true
+        profane_words.sort(key=len)
+        profane_words.reverse()
+        
         return profane_words
 
     def restore_words(self):
@@ -90,9 +98,11 @@ class ProfanityFilter:
         res = input_text
 
         for word in bad_words:
-            word = r'\b%s\b' % word  # Apply word boundaries to the bad word
-            regex = re.compile(word, re.IGNORECASE)
-            res = regex.sub(self._censor_char * (len(word) - 4), res)
+            # Apply word boundaries to the bad word
+            regex_string = r'{}' if self._no_word_boundaries else r'\b{}\b'
+            regex_string = regex_string.format(word)  
+            regex = re.compile(regex_string, re.IGNORECASE)
+            res = regex.sub(self._censor_char * len(word), res)
 
         return res
 
