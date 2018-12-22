@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Welcome to profanityfilter’s documentation! &#8212; profanityfilter 2.0.5 documentation</title>
+    <title>ProfanityFilter Documentation &#8212; profanityfilter 2.0.6 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -16,8 +16,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="profanityfilter package" href="profanityfilter.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -28,10 +27,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="profanityfilter.html" title="profanityfilter package"
-             accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">profanityfilter 2.0.5 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">profanityfilter 2.0.6 documentation</a> &#187;</li> 
       </ul>
     </div>  
 
@@ -40,19 +36,250 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="welcome-to-profanityfilter-s-documentation">
-<h1>Welcome to profanityfilter’s documentation!<a class="headerlink" href="#welcome-to-profanityfilter-s-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="profanityfilter.html">profanityfilter package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="profanityfilter.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="profanityfilter.html#module-profanityfilter.profanityfilter">profanityfilter.profanityfilter module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="profanityfilter.html#module-profanityfilter">Module contents</a></li>
+  <div class="section" id="profanityfilter-documentation">
+<h1>ProfanityFilter Documentation<a class="headerlink" href="#profanityfilter-documentation" title="Permalink to this headline">¶</a></h1>
+<p>ProfanityFilter is a universal python library for detecting and filtering profanity in text.</p>
+</div>
+<div class="section" id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">profanityfilter</span> <span class="k">import</span> <span class="n">ProfanityFilter</span>
+
+<span class="n">pf</span> <span class="o">=</span> <span class="n">ProfanityFilter</span><span class="p">()</span>
+
+<span class="n">pf</span><span class="o">.</span><span class="n">censor</span><span class="p">(</span><span class="s2">&quot;That&#39;s bullshit!&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;That&#39;s ********!&quot;</span>
+
+<span class="n">pf</span><span class="o">.</span><span class="n">set_censor</span><span class="p">(</span><span class="s2">&quot;@&quot;</span><span class="p">)</span>
+<span class="n">pf</span><span class="o">.</span><span class="n">censor</span><span class="p">(</span><span class="s2">&quot;That&#39;s bullshit!&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;That&#39;s @@@@@@@@!&quot;</span>
+
+<span class="n">pf</span><span class="o">.</span><span class="n">define_words</span><span class="p">([</span><span class="s2">&quot;icecream&quot;</span><span class="p">,</span> <span class="s2">&quot;choco&quot;</span><span class="p">])</span>
+<span class="n">pf</span><span class="o">.</span><span class="n">censor</span><span class="p">(</span><span class="s2">&quot;I love icecream and choco!&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;I love ******** and *****&quot;</span>
+
+<span class="n">pf</span><span class="o">.</span><span class="n">is_clean</span><span class="p">(</span><span class="s2">&quot;That&#39;s awesome!&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="kc">True</span>
+
+<span class="n">pf</span><span class="o">.</span><span class="n">is_clean</span><span class="p">(</span><span class="s2">&quot;That&#39;s bullshit!&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="kc">False</span>
+
+<span class="n">pf</span><span class="o">.</span><span class="n">is_profane</span><span class="p">(</span><span class="s2">&quot;Profane shit is not good&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="kc">True</span>
+
+<span class="n">pf_custom</span> <span class="o">=</span> <span class="n">ProfanityFilter</span><span class="p">(</span><span class="n">custom_censor_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;chocolate&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">])</span>
+<span class="n">pf_custom</span><span class="o">.</span><span class="n">censor</span><span class="p">(</span><span class="s2">&quot;Fuck orange chocolates&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;Fuck ****** **********&quot;</span>
+
+<span class="n">pf_extended</span> <span class="o">=</span> <span class="n">ProfanityFilter</span><span class="p">(</span><span class="n">extra_censor_list</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;chocolate&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">])</span>
+<span class="n">pf_extended</span><span class="o">.</span><span class="n">censor</span><span class="p">(</span><span class="s2">&quot;Fuck orange chocolates&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;**** ****** **********&quot;</span>
+</pre></div>
+</div>
+<p>ProfanityFilter also comes with a simple command line utility. <code class="docutils literal notranslate"><span class="pre">profanityfilter</span> <span class="pre">-h</span></code> for more details.</p>
+</div>
+<div class="section" id="installing-profanityfilter">
+<h1>Installing ProfanityFilter<a class="headerlink" href="#installing-profanityfilter" title="Permalink to this headline">¶</a></h1>
+<p>You can install profanityfilter using pip.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&gt;</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">profanityfilter</span></code></p>
+</div>
+<div class="section" id="using-a-custom-list">
+<h1>Using a Custom List<a class="headerlink" href="#using-a-custom-list" title="Permalink to this headline">¶</a></h1>
+<p>You can use a custom list of bad words in profanityfilter the following two ways:</p>
+<ul class="simple">
+<li>During instantiation:</li>
 </ul>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">profanityfilter</span> <span class="k">import</span> <span class="n">ProfanityFilter</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;custom_words.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">custom_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
+
+<span class="n">pf_custom</span> <span class="o">=</span> <span class="n">ProfanityFilter</span><span class="p">(</span><span class="n">custom_censor_list</span> <span class="o">=</span> <span class="n">custom_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>After instantiation:</li>
+</ul>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">profanityfilter</span> <span class="k">import</span> <span class="n">ProfanityFilter</span>
+
+<span class="n">pf_custom</span> <span class="o">=</span> <span class="n">ProfanityFilter</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;custom_words.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">custom_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
+
+<span class="n">pf</span><span class="o">.</span><span class="n">define_words</span><span class="p">(</span><span class="n">custom_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Using a custom censor list means that profanityfilter will not use the default censor list.
+If you’re looking for a way to add additional bad words to the list, see <a class="reference internal" href="#adding-bad-words"><span class="std std-ref">Adding Bad Words</span></a></p>
+</div>
+</div>
+<div class="section" id="adding-bad-words">
+<h1>Adding Bad Words<a class="headerlink" href="#adding-bad-words" title="Permalink to this headline">¶</a></h1>
+<p>You can use an additional list of words in conjunction with the default words in profanityfilter.</p>
+<ul class="simple">
+<li>During instantiation:</li>
+</ul>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">profanityfilter</span> <span class="k">import</span> <span class="n">ProfanityFilter</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;more_words.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">more_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
+
+<span class="n">pf</span> <span class="o">=</span> <span class="n">ProfanityFilter</span><span class="p">(</span><span class="n">extra_censor_list</span> <span class="o">=</span> <span class="n">more_words</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>After instantiation:</li>
+</ul>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">profanityfilter</span> <span class="k">import</span> <span class="n">ProfanityFilter</span>
+
+<span class="n">pf</span> <span class="o">=</span> <span class="n">ProfanityFilter</span><span class="p">()</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;more_words.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">more_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()]</span>
+
+<span class="n">pf</span><span class="o">.</span><span class="n">append_words</span><span class="p">(</span><span class="n">more_words</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="words-boundaries">
+<h1>Words Boundaries<a class="headerlink" href="#words-boundaries" title="Permalink to this headline">¶</a></h1>
+<p>By default, profanityfilter applies word boundries to bad words during censoring.
+Therefore, the default behaviour of profanityfilter is to ignore bad words <cite>inside</cite> words.</p>
+<p><cite>Example:</cite></p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">profanityfilter</span> <span class="k">import</span> <span class="n">ProfanityFilter</span>
+
+<span class="n">pf</span> <span class="o">=</span> <span class="n">ProfanityFilter</span><span class="p">()</span>
+
+<span class="n">pf</span><span class="o">.</span><span class="n">censor</span><span class="p">(</span><span class="s2">&quot;My username is fuckyouusername@bitch.com&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;My username is fuckyouusername@*****.com&quot;</span>
+</pre></div>
+</div>
+<p>To avoid this behaviour you can pass a no_word_boundaries keyword to ProfanityFilter telling it
+to detect bad words inside words.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">profanityfilter</span> <span class="k">import</span> <span class="n">ProfanityFilter</span>
+
+<span class="n">pf</span> <span class="o">=</span> <span class="n">ProfanityFilter</span><span class="p">(</span><span class="n">no_word_boundaries</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="n">pf</span><span class="o">.</span><span class="n">censor</span><span class="p">(</span><span class="s2">&quot;My username is fuckyouusername&quot;</span><span class="p">)</span>
+<span class="o">&gt;</span> <span class="s2">&quot;My username is ****youusername@*****.com&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Without word boundaries there’s a risk of censoring non-harmful words like <cite>fun</cite> to <cite>**n</cite> when <cite>fu</cite>
+is in the censor list. To avoid this behavior, you can either come up with custom censor lists or use
+different instances of profanityfilter accordingly.</p>
+</div>
+</div>
+<div class="section" id="module-profanityfilter.profanityfilter">
+<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-profanityfilter.profanityfilter" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter">
+<em class="property">class </em><code class="descclassname">profanityfilter.profanityfilter.</code><code class="descname">ProfanityFilter</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a ProfanityFilter instance.</p>
+<dl class="docutils">
+<dt>Kwargs:</dt>
+<dd><ul class="first last simple">
+<li><dl class="first docutils">
+<dt>custom_censor_list (list): </dt>
+<dd>A custom list of bad words to be used instead of the default list.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>extra_censor_list (list): </dt>
+<dd>A custom list of bad words to be used in conjunction with the default list.</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>no_word_boundaries (bool): </dt>
+<dd>False means no word boundaries will be used in the regex for bad words. 
+i.e abc<strong>badword</strong>abc will be treated as profane.</dd>
+</dl>
 </li>
 </ul>
-</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter.append_words">
+<code class="descname">append_words</code><span class="sig-paren">(</span><em>word_list</em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.append_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a custom list of profane words to be used in conjunction with the default list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter.censor">
+<code class="descname">censor</code><span class="sig-paren">(</span><em>input_text</em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.censor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns input_text with any profane words censored.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter.define_words">
+<code class="descname">define_words</code><span class="sig-paren">(</span><em>word_list</em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.define_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define a custom list of profane words to be used instead of the default list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter.get_custom_censor_list">
+<code class="descname">get_custom_censor_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.get_custom_censor_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of custom profane words.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter.get_extra_censor_list">
+<code class="descname">get_extra_censor_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.get_extra_censor_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the list of custom additional profane words.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter.get_profane_words">
+<code class="descname">get_profane_words</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.get_profane_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all profane words currently in use.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter.has_bad_word">
+<code class="descname">has_bad_word</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.has_bad_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if text contains profanity, False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter.is_clean">
+<code class="descname">is_clean</code><span class="sig-paren">(</span><em>input_text</em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.is_clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if input_text doesn’t contain any profane words, False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter.is_profane">
+<code class="descname">is_profane</code><span class="sig-paren">(</span><em>input_text</em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.is_profane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if input_text contains any profane words, False otherwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter.remove_word">
+<code class="descname">remove_word</code><span class="sig-paren">(</span><em>word</em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.remove_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove given word from censor list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter.restore_words">
+<code class="descname">restore_words</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.restore_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears all custom censor lists and reloads the default censor list.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="profanityfilter.profanityfilter.ProfanityFilter.set_censor">
+<code class="descname">set_censor</code><span class="sig-paren">(</span><em>character</em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.set_censor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replaces the original censor character ‘*’ with <code class="docutils literal notranslate"><span class="pre">character</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
@@ -71,13 +298,16 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to profanityfilter’s documentation!</a></li>
+<li><a class="reference internal" href="#">ProfanityFilter Documentation</a></li>
+<li><a class="reference internal" href="#quick-start">Quick Start</a></li>
+<li><a class="reference internal" href="#installing-profanityfilter">Installing ProfanityFilter</a></li>
+<li><a class="reference internal" href="#using-a-custom-list">Using a Custom List</a></li>
+<li><a class="reference internal" href="#adding-bad-words">Adding Bad Words</a></li>
+<li><a class="reference internal" href="#words-boundaries">Words Boundaries</a></li>
+<li><a class="reference internal" href="#module-profanityfilter.profanityfilter">API Reference</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
-  <h4>Next topic</h4>
-  <p class="topless"><a href="profanityfilter.html"
-                        title="next chapter">profanityfilter package</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -110,10 +340,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="profanityfilter.html" title="profanityfilter package"
-             >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">profanityfilter 2.0.5 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">profanityfilter 2.0.6 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
