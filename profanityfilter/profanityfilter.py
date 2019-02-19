@@ -53,9 +53,35 @@ class ProfanityFilter:
         """Define a custom list of profane words to be used in conjunction with the default list."""
         self._extra_censor_list.extend(word_list)
 
-    def remove_word(self, word):
-        """Remove given word from censor list."""
-        self._censor_list.remove(word)
+    def remove_word(self, word, universal=True):
+        """Remove given word from censor list.
+
+        Universal:
+            - if True, remove word from extra_censor_list if word is there
+            - if False, only look in default/custom censor list"""
+            if word in _extra_censor_list and universal:
+                extra_censor_list.remove(word)
+            else:
+                if self._custom_censor_list: #NEW - now supports word removal from custom list, if applicable - saves defining new lists to remove words from custom list
+                    self._custom_censor_list.remove(word)
+                else:
+                    self._censor_list.remove(word) #This is the only place the code would check previously
+                    
+     def remove_word_list(self, word_list, universal=True)
+    """Remove given list of words from censor list.
+
+        Universal:
+            - if True, remove word from extra_censor_list if word is there
+                This operation may be slower because each word is removed individually due to possible differences in storage location
+            - if False, only look in default/custom censor list"""
+            if universal:
+                for a in word_list:
+                    remove_word(a)
+            else:
+                if self._custom_censor_list:
+                    self._custom_censor_list = [a for a in self._custom_censor_list if a not in word_list]
+                else:
+                    self._censor_list = [a for a in self._censor_list if a not in word_list]
 
     def set_censor(self, character):
         """Replaces the original censor character '*' with ``character``."""
