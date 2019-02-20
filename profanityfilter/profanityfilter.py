@@ -58,7 +58,7 @@ class ProfanityFilter:
         Remove given word from censor list.
 
         - anywhere (bool):
-            attempt removal from both, the extra censor list and the custom/default censor list
+            attempt removal from both the extra censor list and the custom/default censor list
             """
         if word in self._extra_censor_list and anywhere:
             self._extra_censor_list.remove(word)
@@ -73,9 +73,10 @@ class ProfanityFilter:
         Remove given list of words from censor list.
 
         - anywhere (bool):
-            - if True, remove word from extra_censor_list if word is there
-                This operation may be slower because each word is removed individually due to possible differences in storage location
-            - if False, only look in default/custom censor list"""
+            attempt removal from both the extra censor list and the custom/default censor list
+        - word_list (list):
+            the list of words to remove
+        """
         if anywhere:
             for a in word_list:
                 self.remove_word(a)
