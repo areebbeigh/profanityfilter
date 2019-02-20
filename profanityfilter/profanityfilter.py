@@ -56,7 +56,6 @@ class ProfanityFilter:
     def remove_word(self, word, anywhere=True):
         """
         Remove given word from censor list.
-
             - anywhere (bool):
                 attempt removal from both the extra censor list and the custom/default censor list
         """
@@ -71,7 +70,6 @@ class ProfanityFilter:
     def remove_words(self, word_list, anywhere=True):
         """
         Remove given list of words from censor list.
-
             - anywhere (bool):
                 attempt removal from both the extra censor list and the custom/default censor list
             - word_list (list):
