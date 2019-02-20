@@ -59,7 +59,6 @@ class ProfanityFilter:
         - anywhere (bool):
             attempt removal from both, the extra censor list and the custom/default censor list
             """
-            - if False, only look in default/custom censor list"""
         if word in self._extra_censor_list and anywhere:
             self._extra_censor_list.remove(word)
         else:
