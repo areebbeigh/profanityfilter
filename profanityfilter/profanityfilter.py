@@ -53,13 +53,13 @@ class ProfanityFilter:
         """Define a custom list of profane words to be used in conjunction with the default list."""
         self._extra_censor_list.extend(word_list)
 
-   def remove_word(self, word, anywhere=True):
+    def remove_word(self, word, anywhere=True):
         """
         Remove given word from censor list.
 
         - anywhere (bool):
             attempt removal from both the extra censor list and the custom/default censor list
-            """
+        """
         if word in self._extra_censor_list and anywhere:
             self._extra_censor_list.remove(word)
         else:
@@ -68,7 +68,7 @@ class ProfanityFilter:
             else:
                 self._censor_list.remove(word)
                     
-     def remove_words(self, word_list, anywhere=True):
+    def remove_words(self, word_list, anywhere=True):
         """
         Remove given list of words from censor list.
 
