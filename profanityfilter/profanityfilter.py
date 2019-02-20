@@ -68,7 +68,8 @@ class ProfanityFilter:
                 self._censor_list.remove(word)
                     
      def remove_word_list(self, word_list, anywhere=True):
-        """Remove given list of words from censor list.
+        """
+        Remove given list of words from censor list.
 
         Anywhere:
             - if True, remove word from extra_censor_list if word is there
