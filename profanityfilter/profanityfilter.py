@@ -71,7 +71,7 @@ class ProfanityFilter:
         """
         Remove given list of words from censor list.
 
-        Anywhere:
+        - anywhere (bool):
             - if True, remove word from extra_censor_list if word is there
                 This operation may be slower because each word is removed individually due to possible differences in storage location
             - if False, only look in default/custom censor list"""
