@@ -65,7 +65,7 @@ class ProfanityFilter:
             if self._custom_censor_list: #NEW - now supports word removal from custom list, if applicable - saves defining new lists to remove words from custom list
                 self._custom_censor_list.remove(word)
             else:
-                self._censor_list.remove(word) #This is the only place the code would check previously
+                self._censor_list.remove(word)
                     
      def remove_word_list(self, word_list, anywhere=True):
         """Remove given list of words from censor list.
