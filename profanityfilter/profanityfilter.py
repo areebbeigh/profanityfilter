@@ -77,14 +77,8 @@ class ProfanityFilter:
         - word_list (list):
             the list of words to remove
         """
-        if anywhere:
-            for a in word_list:
-                self.remove_word(a)
-        else:
-            if self._custom_censor_list:
-                self._custom_censor_list = [a for a in self._custom_censor_list if a not in word_list]
-            else:
-                self._censor_list = [a for a in self._censor_list if a not in word_list]
+        for word in word_list:
+            self.remove_word(word, anywhere=anywhere)
 
     def set_censor(self, character):
         """Replaces the original censor character '*' with ``character``."""
