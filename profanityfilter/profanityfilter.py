@@ -62,7 +62,7 @@ class ProfanityFilter:
         if word in self._extra_censor_list and anywhere:
             self._extra_censor_list.remove(word)
         else:
-            if self._custom_censor_list:
+            if word in self._custom_censor_list:
                 self._custom_censor_list.remove(word)
             else:
                 self._censor_list.remove(word)
