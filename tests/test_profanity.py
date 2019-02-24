@@ -62,7 +62,7 @@ class TestProfanity(unittest.TestCase):
         
     def test_remove_words(self):
         self.assertTrue("like" in censored)
-        self.assertTrue("there" in censored)
+        self.assertTrue("I" in censored)
         self.assertFalse("xxx" in censored)
         pf.remove_words(["chocolate", "like", "xxx"])
         update_censored()
