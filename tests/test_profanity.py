@@ -2,7 +2,7 @@ from profanityfilter import ProfanityFilter
 import unittest
 
 pf = ProfanityFilter()
-TEST_STATEMENT = "Hey, I like unicorns, chocolate and oranges, big old Turd!"
+TEST_STATEMENT = "Hey, I like unicorns, chocolate and oranges, Turd!"
 CLEAN_STATEMENT = "Hey there, I like chocolate too mate."
 
 def update_censored(pf_instance=pf):
@@ -28,10 +28,10 @@ class TestProfanity(unittest.TestCase):
             "My email is fuckyoubitch@****.com"
         )
         update_censored()
-        self.assertEqual(censored, "Hey, I like unicorns, chocolate and oranges, big old ****!")
+        self.assertEqual(censored, "Hey, I like unicorns, chocolate and oranges, ****!")
         pf.set_censor("#")
         update_censored()
-        self.assertEqual(censored, "Hey, I like unicorns, chocolate and oranges, big old ####!")
+        self.assertEqual(censored, "Hey, I like unicorns, chocolate and oranges, ####!")
 
     def test_define_words(self):
         # Testing pluralization here as well
@@ -42,33 +42,28 @@ class TestProfanity(unittest.TestCase):
         self.assertTrue("Turd" in censored)
 
     def test_append_words(self):
-        pf.append_words(["Hey", "like", "old"])
+        pf.append_words(["Hey", "like", "oranges"])
         update_censored()
-        self.assertTrue("oranges" in censored)
+        self.assertFalse("oranges" in censored)
         self.assertFalse("Hey" in censored)
-        self.assertFalse("like" in censored)
+        self.assertTrue("and" in censored)
         self.assertFalse("Turd" in censored)
-        self.assertTrue("big" in censored)
-        self.assertFalse("old" in censored)
 
     def test_remove_word(self):
         self.assertTrue("Turd" in censored)
-        self.assertFalse("old" in censored)
         pf.remove_word("turd")
-        pf.remove_word("old")
+        pf.remove_word("oranges")
         update_censored()
         self.assertTrue("Turd" in censored)
-        self.assertTrue("old" in censored)
+        self.assertTrue("oranges" in censored)
         
     def test_remove_words(self):
         self.assertTrue("like" in censored)
         self.assertTrue("I" in censored)
-        self.assertFalse("xxx" in censored)
-        pf.remove_words(["chocolate", "like", "xxx"])
+        pf.remove_words(["chocolate", "oranges"])
         update_censored()
         self.assertTrue("there" in censored)
         self.assertTrue("like" in censored)
-        self.assertTrue("xxx" in censored)
         self.assertFalse("unicorn" in censored)
 
     def test_restore_words(self):
