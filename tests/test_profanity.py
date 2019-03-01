@@ -48,6 +48,7 @@ class TestProfanity(unittest.TestCase):
         self.assertFalse("Hey" in censored)
         self.assertTrue("and" in censored)
         self.assertFalse("Turd" in censored)
+        self.assertTrue("potato" in pf.get_profane_words())
         self.assertTrue("racecar" in pf.get_profane_words())
 
     def test_remove_word(self):
@@ -67,7 +68,7 @@ class TestProfanity(unittest.TestCase):
         pf.remove_words(["chocolate", "racecar"],anywhere=False)
         pf.remove_words(["centaur", "hey"])
         update_censored()
-        self.assertFalse("chocalate" in pf.get_profane_words())
+        self.assertFalse("chocolate" in pf.get_profane_words())
         self.assertTrue("racecar" in pf.get_profane_words())
         self.assertFalse("centaur" in pf.get_profane_words())
 
