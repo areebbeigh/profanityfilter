@@ -35,14 +35,14 @@ class TestProfanity(unittest.TestCase):
 
     def test_define_words(self):
         # Testing pluralization here as well
-        pf.define_words(["unicorn", "chocolate"])
+        pf.define_words(["unicorn", "chocolate", "centaur"])
         update_censored()
         self.assertFalse("unicorns" in censored)
         self.assertFalse("chocolate" in censored)
         self.assertTrue("Turd" in censored)
 
     def test_append_words(self):
-        pf.append_words(["Hey", "like", "oranges"])
+        pf.append_words(["Hey", "like", "oranges", "potato", "racecar"])
         update_censored()
         self.assertFalse("oranges" in censored)
         self.assertFalse("Hey" in censored)
@@ -51,20 +51,24 @@ class TestProfanity(unittest.TestCase):
 
     def test_remove_word(self):
         self.assertTrue("Turd" in censored)
+        self.assertTrue("potato" in pf.get_profane_words())
         pf.remove_word("turd")
+        pf.remove_word("potato", anywhere=False)
         pf.remove_word("oranges")
         update_censored()
         self.assertTrue("Turd" in censored)
-        self.assertTrue("oranges" in censored)
+        self.assertFalse("oranges" in pf.get_profane_words())
+        self.assertTrue("potato" in pf.get_profane_words())
         
     def test_remove_words(self):
         self.assertTrue("like" in censored)
-        self.assertTrue("I" in censored)
-        pf.remove_words(["chocolate", "oranges"])
+        self.assertTrue("chocalate" in pf.get_profane_words())
+        pf.remove_words(["chocolate", "racecar"],anywhere=False)
+        pf.remove_words(["centaur", "hey"])
         update_censored()
-        self.assertTrue("there" in censored)
-        self.assertTrue("like" in censored)
-        self.assertFalse("unicorn" in censored)
+        self.assertFalse("chocalate" in pf.get_profane_words())
+        self.assertTrue("racecar" in pf.get_profane_words())
+        self.assertFalse("centaur" in pf.get_profane_words())
 
     def test_restore_words(self):
         pf.define_words(["cupcakes"])
