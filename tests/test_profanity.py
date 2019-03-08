@@ -46,7 +46,6 @@ class TestProfanity(unittest.TestCase):
         update_censored()
         self.assertTrue("oranges" in censored)
         self.assertFalse("Hey" in censored)
-        self.assertTrue("and" in censored)
         self.assertFalse("Turd" in censored)
         self.assertTrue("potato" in pf.get_profane_words())
         self.assertTrue("racecar" in pf.get_profane_words())
