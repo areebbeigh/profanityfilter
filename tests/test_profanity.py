@@ -44,7 +44,7 @@ class TestProfanity(unittest.TestCase):
     def test_append_words(self):
         pf.append_words(["Hey", "like"])
         update_censored()
-        self.assertFalse("oranges" in censored)
+        self.assertTrue("oranges" in censored)
         self.assertFalse("Hey" in censored)
         self.assertTrue("and" in censored)
         self.assertFalse("Turd" in censored)
