@@ -1,6 +1,6 @@
 import os
 import re
-
+import string
 import inflection
 
 
@@ -70,7 +70,9 @@ class ProfanityFilter:
         for word in self.get_profane_words():
             prof[word.lower()] = True
         for word in text.split():
-            if prof.get(word.lower(), False):
+            lower = word.lower()
+            without_punc = ''.join(ch for ch in lower if ch not in set(string.punctuation))
+            if prof.get(lower, False) or prof.get(without_punc, False):
                 return True
         return False
 
