@@ -66,7 +66,13 @@ class ProfanityFilter:
 
     def has_bad_word(self, text):
         """Returns True if text contains profanity, False otherwise."""
-        return self.censor(text) != text
+        prof = {}
+        for word in self.get_profane_words():
+            prof[word] = True
+        for word in input_text.split():
+            if prof.get(word, False):
+                return True
+        return False
 
     def get_custom_censor_list(self):
         """Returns the list of custom profane words."""
@@ -125,3 +131,4 @@ class ProfanityFilter:
     def is_profane(self, input_text):
         """Returns True if input_text contains any profane words, False otherwise."""
         return self.has_bad_word(input_text)
+        
