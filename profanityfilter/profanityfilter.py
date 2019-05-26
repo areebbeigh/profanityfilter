@@ -68,9 +68,9 @@ class ProfanityFilter:
         """Returns True if text contains profanity, False otherwise."""
         prof = {}
         for word in self.get_profane_words():
-            prof[word] = True
+            prof[word.lower()] = True
         for word in text.split():
-            if prof.get(word, False):
+            if prof.get(word.lower(), False):
                 return True
         return False
 
