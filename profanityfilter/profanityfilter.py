@@ -69,7 +69,7 @@ class ProfanityFilter:
         prof = {}
         for word in self.get_profane_words():
             prof[word] = True
-        for word in input_text.split():
+        for word in text.split():
             if prof.get(word, False):
                 return True
         return False
@@ -131,4 +131,3 @@ class ProfanityFilter:
     def is_profane(self, input_text):
         """Returns True if input_text contains any profane words, False otherwise."""
         return self.has_bad_word(input_text)
-        
