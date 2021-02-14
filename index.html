@@ -177,10 +177,10 @@ To avoid this behavior, you can either come up with custom censor lists or use d
 <span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-profanityfilter.profanityfilter" title="Permalink to this headline">¶</a></h1>
 <dl class="py class">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter">
-<em class="property">class </em><code class="sig-prename descclassname">profanityfilter.profanityfilter.</code><code class="sig-name descname">ProfanityFilter</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">profanityfilter.profanityfilter.</span></code><code class="sig-name descname"><span class="pre">ProfanityFilter</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="py method">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a ProfanityFilter instance.</p>
 <dl class="simple">
 <dt>Kwargs:</dt><dd><ul class="simple">
@@ -207,73 +207,73 @@ i.e abc<strong>badword</strong>abc will be treated as profane.</p>
 
 <dl class="py method">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter.append_words">
-<code class="sig-name descname">append_words</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.append_words" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">append_words</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.append_words" title="Permalink to this definition">¶</a></dt>
 <dd><p>Define a custom list of profane words to be used in conjunction with the default list.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter.censor">
-<code class="sig-name descname">censor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.censor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">censor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.censor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns input_text with any profane words censored.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter.define_words">
-<code class="sig-name descname">define_words</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word_list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.define_words" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">define_words</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.define_words" title="Permalink to this definition">¶</a></dt>
 <dd><p>Define a custom list of profane words to be used instead of the default list.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter.get_custom_censor_list">
-<code class="sig-name descname">get_custom_censor_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.get_custom_censor_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_custom_censor_list</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.get_custom_censor_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the list of custom profane words.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter.get_extra_censor_list">
-<code class="sig-name descname">get_extra_censor_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.get_extra_censor_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_extra_censor_list</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.get_extra_censor_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the list of custom additional profane words.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter.get_profane_words">
-<code class="sig-name descname">get_profane_words</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.get_profane_words" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">get_profane_words</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.get_profane_words" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns all profane words currently in use.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter.has_bad_word">
-<code class="sig-name descname">has_bad_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.has_bad_word" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">has_bad_word</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.has_bad_word" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if text contains profanity, False otherwise.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter.is_clean">
-<code class="sig-name descname">is_clean</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.is_clean" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">is_clean</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.is_clean" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if input_text doesn’t contain any profane words, False otherwise.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter.is_profane">
-<code class="sig-name descname">is_profane</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_text</span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.is_profane" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">is_profane</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.is_profane" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if input_text contains any profane words, False otherwise.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter.remove_word">
-<code class="sig-name descname">remove_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.remove_word" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">remove_word</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.remove_word" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove given word from censor list.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter.restore_words">
-<code class="sig-name descname">restore_words</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.restore_words" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">restore_words</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.restore_words" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clears all custom censor lists and reloads the default censor list.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="profanityfilter.profanityfilter.ProfanityFilter.set_censor">
-<code class="sig-name descname">set_censor</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">character</span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.set_censor" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">set_censor</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">character</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profanityfilter.profanityfilter.ProfanityFilter.set_censor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Replaces the original censor character ‘*’ with <code class="docutils literal notranslate"><span class="pre">character</span></code>.</p>
 </dd></dl>
 
@@ -344,7 +344,7 @@ i.e abc<strong>badword</strong>abc will be treated as profane.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2018, Areeb Beigh.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.3.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.0.
     </div>
   </body>
 </html>
