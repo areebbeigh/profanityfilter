@@ -5,12 +5,14 @@ pf = ProfanityFilter()
 TEST_STATEMENT = "Hey, I like unicorns, chocolate and oranges, Turd!"
 CLEAN_STATEMENT = "Hey there, I like chocolate too mate."
 
+
 def update_censored(pf_instance=pf):
     global censored
     censored = pf_instance.censor(TEST_STATEMENT)
 
 
 class TestProfanity(unittest.TestCase):
+
     def setUp(self):
         global censored
         pf.set_censor("*")  # Only to restore the default censor char

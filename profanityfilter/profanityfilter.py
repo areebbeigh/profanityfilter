@@ -14,13 +14,13 @@ class ProfanityFilter:
         Returns a ProfanityFilter instance.
 
         Kwargs:
-            - custom_censor_list (list): 
+            - custom_censor_list (list):
                 A custom list of bad words to be used instead of the default list.
-            - extra_censor_list (list): 
+            - extra_censor_list (list):
                 A custom list of bad words to be used in conjunction with the default list.
-            - no_word_boundaries (bool): 
-                False means no word boundaries will be used in the regex for bad words. 
-                i.e abc\ **badword**\ abc will be treated as profane.
+            - no_word_boundaries (bool):
+                False means no word boundaries will be used in the regex for bad words.
+                i.e 'abc **badword** abc' will be treated as profane.
         """
 
         # If defined, use this instead of _censor_list
@@ -125,11 +125,9 @@ class ProfanityFilter:
 
         return res
 
-
     def is_clean(self, input_text):
         """Returns True if input_text doesn't contain any profane words, False otherwise."""
         return not self.has_bad_word(input_text)
-
 
     def is_profane(self, input_text):
         """Returns True if input_text contains any profane words, False otherwise."""
