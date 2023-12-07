@@ -1,0 +1,16 @@
+[flake8]
+# @see https://flake8.pycqa.org/en/latest/user/configuration.html?highlight=.flake8
+
+# Extended output format.
+format = pylint
+
+# Show the source of errors.
+show_source = True
+statistics = True
+
+max-complexity = 10
+max-line-length = 127
+
+# List ignore rules one per line.
+ignore =
+    W503
