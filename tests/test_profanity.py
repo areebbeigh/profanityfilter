@@ -64,5 +64,16 @@ class TestProfanity(unittest.TestCase):
         self.assertFalse("dibs" in bad_words)
         self.assertFalse("cupcakes" in bad_words)
 
+    def test_symbols(self):
+        pf.define_words(["+123456789", "@$$", r"backs\ash"])
+        update_censored()
+        bad_words = pf.get_profane_words()
+        assert r"\+123456789" in bad_words
+        assert r"@\$\$" in bad_words
+        assert pf.censor("Call +123456789 for unit testing") == "Call ********** for unit testing"
+        assert pf.censor("He saddled his @$$.") == "He saddled his ***."
+        assert pf.censor(r"Slash, slash, backs\ash, escape.") == "Slash, slash, *********, escape."
+
+
 if __name__ == "__main__":
     unittest.main()
