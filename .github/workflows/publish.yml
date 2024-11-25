@@ -124,8 +124,14 @@ jobs:
 
           echo "url=${url}" >> $GITHUB_OUTPUT
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
+
+      - uses: actions/checkout@v4
+        timeout-minutes: 2
+
+      - uses: actions/setup-python@v5
+        timeout-minutes: 2
+        with:
+          python-version: '3.x'
 
       - name: Validate tag version
         if: ${{ startsWith(github.ref, 'refs/tags') }}
@@ -139,6 +145,8 @@ jobs:
 
       - name: Build package ${{ steps.version.outputs.reponame }} @ ${{ steps.version.outputs.version }}
         run: |
+          pip install build
+          pip install twine
           python -m build
       - name: Publish package distributions to PyPI
         if: ${{ startsWith(github.ref, 'refs/tags') && steps.version.outputs.environment == 'pypi' && github.event.inputs.dryRun != 'true' }}
