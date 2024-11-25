@@ -1,6 +1,6 @@
 import os
 import re
-
+import string
 import inflection
 
 STARTS_WITH_WORD_CHAR = re.compile(r'^\w')
@@ -70,7 +70,15 @@ class ProfanityFilter:
 
     def has_bad_word(self, text):
         """Returns True if text contains profanity, False otherwise."""
-        return self.censor(text) != text
+        prof = {}
+        for word in self.get_profane_words():
+            prof[word.lower()] = True
+        for word in text.split():
+            lower = word.lower()
+            without_punc = ''.join(ch for ch in lower if ch not in set(string.punctuation))
+            if prof.get(lower, False) or prof.get(without_punc, False):
+                return True
+        return False
 
     def get_custom_censor_list(self):
         """Returns the list of custom profane words."""
