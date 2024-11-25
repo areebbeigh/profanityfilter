@@ -6,12 +6,14 @@ TEST_STATEMENT = "Hey, my efuckingmail is fuckyoucunt@bitch.com"
 CENSORED_STATEMENT = "Hey, my e*******mail is ****you****@*****.com"
 CLEAN_STATEMENT = "Hey there, I like chocolate too mate."
 
+
 def update_censored(pf_instance=pf):
     global censored
     censored = pf_instance.censor(TEST_STATEMENT)
 
 
 class TestProfanity(unittest.TestCase):
+
     def setUp(self):
         global censored
         # Only to restore the default censor char
@@ -30,6 +32,7 @@ class TestProfanity(unittest.TestCase):
         pf.set_censor("#")
         update_censored()
         self.assertEqual(censored, CENSORED_STATEMENT.replace("*", "#"))
+
 
 if __name__ == "__main__":
     unittest.main()

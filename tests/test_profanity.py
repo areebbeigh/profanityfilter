@@ -5,12 +5,14 @@ pf = ProfanityFilter()
 TEST_STATEMENT = "Hey, I like unicorns, chocolate and oranges, Turd!"
 CLEAN_STATEMENT = "Hey there, I like chocolate too mate."
 
+
 def update_censored(pf_instance=pf):
     global censored
     censored = pf_instance.censor(TEST_STATEMENT)
 
 
 class TestProfanity(unittest.TestCase):
+
     def setUp(self):
         global censored
         pf.set_censor("*")  # Only to restore the default censor char
@@ -63,6 +65,17 @@ class TestProfanity(unittest.TestCase):
         bad_words = pf.get_profane_words()
         self.assertFalse("dibs" in bad_words)
         self.assertFalse("cupcakes" in bad_words)
+
+    def test_symbols(self):
+        pf.define_words(["+123456789", "@$$", r"backs\ash"])
+        update_censored()
+        bad_words = pf.get_profane_words()
+        assert r"\+123456789" in bad_words
+        assert r"@\$\$" in bad_words
+        assert pf.censor("Call +123456789 for unit testing") == "Call ********** for unit testing"
+        assert pf.censor("He saddled his @$$.") == "He saddled his ***."
+        assert pf.censor(r"Slash, slash, backs\ash, escape.") == "Slash, slash, *********, escape."
+
 
 if __name__ == "__main__":
     unittest.main()

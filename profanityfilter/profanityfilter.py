@@ -3,6 +3,10 @@ import re
 
 import inflection
 
+STARTS_WITH_WORD_CHAR = re.compile(r'^\w')
+RE_ESCAPED_CHAR = re.compile(r'\\(.)')
+ENDS_WITH_WORD_CHAR = re.compile(r'[^\\]\w$')
+
 
 class ProfanityFilter:
     def __init__(self, **kwargs):
@@ -10,13 +14,13 @@ class ProfanityFilter:
         Returns a ProfanityFilter instance.
 
         Kwargs:
-            - custom_censor_list (list): 
+            - custom_censor_list (list):
                 A custom list of bad words to be used instead of the default list.
-            - extra_censor_list (list): 
+            - extra_censor_list (list):
                 A custom list of bad words to be used in conjunction with the default list.
-            - no_word_boundaries (bool): 
-                False means no word boundaries will be used in the regex for bad words. 
-                i.e abc\ **badword**\ abc will be treated as profane.
+            - no_word_boundaries (bool):
+                False means no word boundaries will be used in the regex for bad words.
+                i.e 'abc **badword** abc' will be treated as profane.
         """
 
         # If defined, use this instead of _censor_list
@@ -81,14 +85,15 @@ class ProfanityFilter:
         profane_words = []
 
         if self._custom_censor_list:
-            profane_words = [w for w in self._custom_censor_list]  # Previous versions of Python don't have list.copy()
+            profane_words = [re.escape(w) for w in self._custom_censor_list]
         else:
-            profane_words = [w for w in self._censor_list]
+            profane_words = [re.escape(w) for w in self._censor_list]
 
-        profane_words.extend(self._extra_censor_list)
+        extra_censor_list = [re.escape(w) for w in self._extra_censor_list]
+        profane_words.extend(extra_censor_list)
         profane_words.extend([inflection.pluralize(word) for word in profane_words])
         profane_words = list(set(profane_words))
-        
+
         # We sort the list based on decreasing word length so that words like
         # 'fu' aren't substituted before 'fuck' if no_word_boundaries = true
         profane_words.sort(key=len)
@@ -109,18 +114,20 @@ class ProfanityFilter:
 
         for word in bad_words:
             # Apply word boundaries to the bad word
-            regex_string = r'{0}' if self._no_word_boundaries else r'\b{0}\b'
-            regex_string = regex_string.format(word)  
+            regex_string = word
+            if not self._no_word_boundaries:
+                if STARTS_WITH_WORD_CHAR.search(word):
+                    regex_string = r'\b' + regex_string
+                if ENDS_WITH_WORD_CHAR.search(word):
+                    regex_string = regex_string + r'\b'
             regex = re.compile(regex_string, re.IGNORECASE)
-            res = regex.sub(self._censor_char * len(word), res)
+            res = regex.sub(self._censor_char * len(RE_ESCAPED_CHAR.sub("\1", word)), res)
 
         return res
-
 
     def is_clean(self, input_text):
         """Returns True if input_text doesn't contain any profane words, False otherwise."""
         return not self.has_bad_word(input_text)
-
 
     def is_profane(self, input_text):
         """Returns True if input_text contains any profane words, False otherwise."""

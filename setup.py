@@ -1,13 +1,12 @@
 from setuptools import setup, find_packages
 
-from codecs import open
 from os import path
 
 here = path.abspath(path.dirname(__file__))
 
 setup(
     name='profanityfilter',
-    version='2.0.6.',
+    version='2.0.6',
     description='A universal Python library for detecting and/or filtering profane words.',
     long_description='For more details visit https://github.com/areebbeigh/profanityfilter',
     url='https://github.com/areebbeigh/profanityfilter',
