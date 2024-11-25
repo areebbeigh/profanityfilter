@@ -32,7 +32,7 @@ on:
 
 jobs:
   lint:
-    if: github.repository == 'areebbeigh/profanityfilters'
+    if: github.repository == 'areebbeigh/profanityfilter'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -81,7 +81,7 @@ jobs:
         if: always()
 
   publishSkipped:
-    if: github.repository != 'areebbeigh/profanityfilters'
+    if: github.repository != 'areebbeigh/profanityfilter'
     runs-on: ubuntu-latest
     steps:
       - run: |
