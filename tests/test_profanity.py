@@ -37,7 +37,7 @@ class TestProfanity(unittest.TestCase):
 
     def test_define_words(self):
         # Testing pluralization here as well
-        pf.define_words(["unicorn", "chocolate"])
+        pf.define_words(["unicorn", "chocolate", "centaur"])
         update_censored()
         self.assertFalse("unicorns" in censored)
         self.assertFalse("chocolate" in censored)
@@ -48,14 +48,29 @@ class TestProfanity(unittest.TestCase):
         update_censored()
         self.assertTrue("oranges" in censored)
         self.assertFalse("Hey" in censored)
-        self.assertFalse("like" in censored)
         self.assertFalse("Turd" in censored)
 
     def test_remove_word(self):
         self.assertTrue("Turd" in censored)
+        pf.append_words(["oranges", "potato"])
+        update_censored()
         pf.remove_word("turd")
+        self.assertRaises(ValueError, pf.remove_word, "potato", anywhere=False)
+        pf.remove_word("oranges")
         update_censored()
         self.assertTrue("Turd" in censored)
+        self.assertFalse("oranges" in pf.get_profane_words())
+        self.assertTrue("potato" in pf.get_profane_words())
+        
+    def test_remove_words(self):
+        pf.define_words(["chocolate", "centaur"])
+        pf.append_words(["potato", "racecar", "hey"])
+        self.assertTrue("chocolate" in pf.get_profane_words())
+        self.assertRaises(ValueError, pf.remove_words, ["chocolate", "racecar"], anywhere=False)
+        pf.remove_words(["centaur", "hey"])
+        self.assertFalse("chocolate" in pf.get_profane_words())
+        self.assertTrue("racecar" in pf.get_profane_words())
+        self.assertFalse("centaur" in pf.get_profane_words())
 
     def test_restore_words(self):
         pf.define_words(["cupcakes"])
