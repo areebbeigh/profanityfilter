@@ -1,0 +1,67 @@
+---
+name: Tests
+on:
+  push:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  # Quick check so we don't waste minutes if there's a Flake8 error
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install requirements
+        run: pip install flake8 pycodestyle
+      - name: Check syntax
+        run: flake8
+
+  test:
+    needs: lint
+    strategy:
+      fail-fast: false
+
+    name: Test on 3,x
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+        timeout-minutes: 2
+
+      - uses: actions/setup-python@v5
+        timeout-minutes: 2
+        with:
+          python-version: '3.x'
+
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+          pip install -r dev-requirements.txt
+
+      - name: Run tests
+        continue-on-error: ${{ matrix.experimental }}
+        run: pytest  --junit-xml=/tmp/artifacts/junit/results.xml
+
+      - name: Test Summary
+        uses: test-summary/action@v2
+        continue-on-error: ${{ matrix.experimental }}
+        with:
+          paths: "/tmp/artifacts/junit/*.xml"
+        if: always()
+
+      - name: Make docs
+        run: |          
+          pip install sphinx
+          cd docs
+          mkdir -p build
+          rm -rf build/html
+          make html
+
+
+  
